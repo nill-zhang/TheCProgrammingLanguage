@@ -58,7 +58,7 @@ void count(){
             }
     }
     printf("nTabs\tnBackSpaces\tnBlanks\tnCharacters\tnWords\tnLines\n");
-    printf("%d\t%d\t%d\t%d\t%d\t%d\n",ntab,nbackspace,nblank,ncharacter,nword,nline);
+    printf("%5d\t%11d\t%7d\t%11d\t%6d\t%6d\n",ntab,nbackspace,nblank,ncharacter,nword,nline);
     printf("Original Input: %s\n",input);
 }
 
