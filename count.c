@@ -10,7 +10,8 @@ void count(){
     char c;
     char input[2000];
     int inword = 0;
-    for (int i=0; (c = getchar()) != EOF; i++){
+    int i;
+    for (i=0; (c = getchar()) != EOF; i++){
         input[i] = c;
         switch (c)
             {
@@ -57,6 +58,15 @@ void count(){
                     inword = 1;
             }
     }
+    
+    
+    if (inword == 1){
+        nword++;	
+    }/*if you sent EOF while you are still in a word, I need to count this word in*/
+
+    if (input[i-1] != '\n'){
+        nline++;
+    }/*if the last character was not a newline, means you sent an EOF while your are on a newline, I need to count this line in*/
     printf("\nnTabs\tnBackSpaces\tnBlanks\tnCharacters\tnWords\tnLines\n");
     printf("%5d\t%11d\t%7d\t%11d\t%6d\t%6d\n",ntab,nbackspace,nblank,ncharacter,nword,nline);
     printf("Original Input: %s\n",input);
