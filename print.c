@@ -41,6 +41,38 @@ void GetInput(char in[]){
     }/*get all the input characters*/
 }
 
+
+/* CharacterFrequecnyPrint prints histogram on based on each characeter's frequency in a text stream */
+void CharacterFrequencyPrint(){
+    char input[2000];
+    int freq[128]; /* freq holds each one of the 128 ascii character's frequency count*/
+    GetInput(input);
+    for(int i=0;i<128;i++){
+        freq[i] = 0;
+    
+    }/* this step is necessary, default values is random in all uninitalized array elements*/
+
+    for(int i=0;input[i]!='\0';i++){
+        freq[input[i]]++;
+    
+    }
+
+    for(int j=0;j<128;j++){
+        if (freq[j] != '\0'){
+	      printf("%c:\t",j);
+              for(int k=0;k<freq[j];k++)
+	         printf("*");
+	      printf("\n");
+	}
+    }
+}
+
+
+
+
+
+
+
 /* LonglinePrint prints lines with over 80 characters from a text stream*/
 void LonglinePrint(){
     char input[2000];
@@ -112,6 +144,6 @@ void WordPrint(){
 }
 void main(){
     //WordPrint();
-    LonglinePrint();
-
+    //LonglinePrint();
+    CharacterFrequencyPrint();
 }
