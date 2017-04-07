@@ -34,28 +34,32 @@ void FmtPrint(){
 /* WordPrint prints a text stream one word per line*/
 void WordPrint(){
     char c;
-    char in[1000];
+    char input[1000]; /*holding the input text stream*/
     int l=0;
     while((c = getchar())!= EOF){
-        in[i] = c;
+        input[l] = c;
         l++;
     }/*get all the input characters*/
 
     int i;
-    char temp[500]; /*holding a word*/
+    char temp[500]; /*holding a word, this buffer is reused*/
     int inword =0;
-    int j = 1; /* the first index of a word, or index of any whitespace character*/
-    for (i=0;input[i]!='\0';i++){
+    int j = -1; /* the first index of a word, or index of any whitespace character*/
+    printf("\n\n\033[35mYou typed the following words:\033[0m\n");    
+    for (i=0;i<l;i++){
 
-        if (input[i]!='\t'||input[i]!=' '||input[i]!='\n'){
-            temp[i-j-1]=input[i];
+        if ((input[i]!='\t') && (input[i]!=' ') && (input[i]!='\n')){
+	    temp[i-j-1]=input[i];
             inword = 1;
+
         }else{
-            if (inword == 1){
+
+            if (inword == 1){ /*if the current character is the first white-spcae character right to a word*/
 
                 inword = 0;
-                temp[i-j-1] = '\0';
-                for (int k=0;temp[k]!='\0';k++){
+                temp[i-j-1] = '\0'; /*set the end flag of the buffer*/
+	
+		for (int k=0;temp[k]!='\0';k++){
                     printf("%c",temp[k]);
 
                 }
@@ -66,6 +70,13 @@ void WordPrint(){
 
     }
 
+    if (inword == 1){
+        for(int k=0;k<i-j-1;k++){
+            printf("%c",temp[k]);
+	}
+   
+    }/* the if here is to make sure the last word being printed if the text stream is exit from a word not from a particular white space character*/
+    printf("\n");
 }
 void main(){
     WordPrint();
