@@ -47,11 +47,12 @@ void LonglinePrint(){
     GetInput(input);
     int j,k;
     int start = 0;  /*start is the index of the first character of a newline*/
+    printf("\033[31mLong lines:\033[0m\n");
     for(j=0;input[j]!='\0';j++){
         if (input[j] == '\n'){
             if ((j - start) >=80){
                 for(k=start;k<=j;k++){ /* uses input[j] as line separator*/
-                    printf("\c",input[k]);
+                    printf("%c",input[k]);
                 }
             }
             start = j+1;
@@ -60,7 +61,7 @@ void LonglinePrint(){
     }
     if ((j - start) >=80){
         for(k=start;k<j;k++){
-            printf("\c",input[k]);
+            printf("%c",input[k]);
         }
     }/* Count in the line ends with EOF*/
 
@@ -110,6 +111,7 @@ void WordPrint(){
     printf("\n");
 }
 void main(){
-    WordPrint();
+    //WordPrint();
+    LonglinePrint();
 
 }
