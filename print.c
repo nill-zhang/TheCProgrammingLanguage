@@ -31,22 +31,53 @@ void FmtPrint(){
 
 }
 
-/* WordPrint prints a text stream one word per line*/
-void WordPrint(){
+
+void GetInput(char in[]){
     char c;
-    char input[1000]; /*holding the input text stream*/
     int l=0;
     while((c = getchar())!= EOF){
-        input[l] = c;
+        in[l] = c;
         l++;
     }/*get all the input characters*/
+}
+
+/* LonglinePrint prints lines with over 80 characters from a text stream*/
+void LonglinePrint(){
+    char input[2000];
+    GetInput(input);
+    int j,k;
+    int start = 0;  /*start is the index of the first character of a newline*/
+    for(j=0;input[j]!='\0';j++){
+        if (input[j] == '\n'){
+            if ((j - start) >=80){
+                for(k=start;k<=j;k++){
+                    printf("\c",input[k]);
+                }
+            }
+            start = j+1;
+        }
+
+    }
+    if ((j - start) >=80){
+        for(k=start;k<j;k++){
+            printf("\c",input[k]);
+        }
+    }/* Count in the line ends with EOF*/
+
+    printf("\n");
+}
+
+/* WordPrint prints a text stream one word per line*/
+void WordPrint(){
 
     int i;
+    char input[1000];
+    GetInput(input);
     char temp[500]; /*holding a word, this buffer is reused*/
     int inword =0;
     int j = -1; /* the first index of a word, or index of any whitespace character*/
     printf("\n\n\033[35mYou typed the following words:\033[0m\n");    
-    for (i=0;i<l;i++){
+    for (i=0;input[i] != '\0';i++){
 
         if ((input[i]!='\t') && (input[i]!=' ') && (input[i]!='\n')){
 	    temp[i-j-1]=input[i];
