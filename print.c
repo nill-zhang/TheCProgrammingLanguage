@@ -50,7 +50,7 @@ void LonglinePrint(){
     for(j=0;input[j]!='\0';j++){
         if (input[j] == '\n'){
             if ((j - start) >=80){
-                for(k=start;k<=j;k++){
+                for(k=start;k<=j;k++){ /* uses input[j] as line separator*/
                     printf("\c",input[k]);
                 }
             }
