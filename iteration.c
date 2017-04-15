@@ -11,8 +11,8 @@ int fibonacci(int n){
         return 1;
     }else{
         int i,j,k,temp;
-        i=j=1;
-        for (k=0; k<n-2; k++){
+        i=j=1; // two initial values for n=1,n=2
+        for (k=0; k<n-2; k++){ // n starts with 3, when k = 0;
             temp = j;
             j += i;
             i = temp;
@@ -28,7 +28,7 @@ int factorial(int n){
         return 1;
     }else{
         int result = 1;
-        while (n>1){
+        while (n > 1){
             result *= n;
             n--;
         }
