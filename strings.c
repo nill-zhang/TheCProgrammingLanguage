@@ -8,7 +8,11 @@ int main(){
 
 
 }
-
+// different ways to initialize strings
+//strcpy
+// char str[] = "s ssss";
+// char *p = "sfefefe";
+//
 // typedef
 // int numbers[5];
 // int *p = numbers;
