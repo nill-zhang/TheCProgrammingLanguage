@@ -58,9 +58,9 @@ void AddAsTail(LinkedList *list, void *data){
 
 };
 
-int CompareAge(Student *stu1, Student *stu2){
+int CompareName_SameAsFunctionPointer(void *data1, void *data2){
 
-    return (stu1->age)-(stu2->age);
+    return strcmp((Student*)data1->name,(Student*)data2->name);
 
 };
 
@@ -154,7 +154,8 @@ void LinkedList_Test(void){
     Student *temp = malloc(sizeof(Student));
     strcpy(temp->name,"lyzhang");
     temp->age = 3;
-    target = GetNode(&linkedlist,(Compare)CompareName,temp);
+    target = GetNode(&linkedlist,CompareName_SameAsFunctionPointer,temp);
+    //target = GetNode(&linkedlist,(Compare)CompareName,temp);
     DeleteNode(&linkedlist,target);
     DisplayNodes(&linkedlist);
 }
@@ -168,5 +169,6 @@ int main(){
 /*
   Note:
   1. uninitialized Pointer can not be used, but variable can see line 144-145,line 146-147
-
+  2. if your implementation does not have the same prototype with the function pointer
+     you have to convert it as I did in line 158, line 157,158 has the same effect.
  */
