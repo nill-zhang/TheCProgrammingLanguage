@@ -1,9 +1,10 @@
 //
-// Created by Admin on 4/15/2017.
+// Created by sfzhang on 4/15/2017.
 //
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 void *my_strrep(const char*,unsigned);
 void *my_strdup(const char*);
 unsigned *my_strlen(const char*);
@@ -36,15 +37,18 @@ unsigned my_strlen(const char*p){
 }
 
 void *my_strcpy(char *p1, const char *p2){
-    if (strlen(p2) > strlen(p1)){
-        p1 = realloc(p1, strlen(p2)+1);
-
-    }else{
-
-
-
+    p1 = realloc(p1, strlen(p2)+1);
+    if (p1 == _NULL){
+        p1 = malloc(strlen(p2)+1);
     }
 
+    if (p1 ==_NULL){
+        exit(EXIT_FAILURE);
+    }
+    // when the loop exits, *p1 == '\0'
+    while ((*p1++ = *p2++) != '\0')
+        ;
+    return p1;
 
 
 }
@@ -53,11 +57,16 @@ void *my_strcpy(char *p1, const char *p2){
 
 void *my_strcat(char *p1, const char *p2){
     char *new = (char *)realloc(p1,strlen(p1)+strlen(p2)+1);
-
-
-
-
-
+    if (new == _NULL) {
+        new = (char *) malloc(strlen(p1) + strlen(p2) + 1);
+    }
+    if (new == _NULL){
+        exit(EXIT_FAILURE);
+    }
+    strcpy(new,p1);
+    strcpy(new[strlen(p1),p2]);
+    free(p1);
+    return new;
 
 }
 
