@@ -4,19 +4,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
+
 
 void *my_strrep(const char*,unsigned);
 void *my_strdup(const char*);
-unsigned *my_strlen(const char*);
+unsigned my_strlen(const char*);
 void *my_strcpy(char *, const char *);
 void *my_strcat(char *, const char *);
 
 void *my_strrep(const char* p, unsigned num) {
     char *new = malloc(num * strlen(p) + 1);
     int i = 0;
-    while (i++ < num) {
-        strcpy(new[i * strlen(p)], p);
-    }
+    while (i++ < num)
+        strcpy(&new[i * strlen(p)], p);
+    return new;
 
 }
 
@@ -27,8 +29,8 @@ void *my_strdup(const char*p){
 
 }
 
-unsigned my_strlen(const char*p){
-    int i=0;
+unsigned my_strlen(const char *p){
+    unsigned i=0;
     while(p[i++]!='\0')
         ;
     return i;
@@ -43,6 +45,7 @@ void *my_strcpy(char *p1, const char *p2){
     }
 
     if (p1 ==_NULL){
+        printf(strerror(errno));
         exit(EXIT_FAILURE);
     }
     // when the loop exits, *p1 == '\0'
@@ -56,26 +59,46 @@ void *my_strcpy(char *p1, const char *p2){
 
 
 void *my_strcat(char *p1, const char *p2){
+    printf("enter my_strcat!");
+    fflush(stdout);
+    printf("p1:%s\tp2:%s\n",p1,p2);
     char *new = (char *)realloc(p1,strlen(p1)+strlen(p2)+1);
     if (new == _NULL) {
+        perror("realloc:");
         new = (char *) malloc(strlen(p1) + strlen(p2) + 1);
     }
     if (new == _NULL){
+        perror("malloc:");
         exit(EXIT_FAILURE);
     }
     strcpy(new,p1);
-    strcpy(new[strlen(p1),p2]);
+    strcpy(new+strlen(p1),p2);
     free(p1);
+    printf("leave my_strcat!");
+    fflush(stdout);
     return new;
 
 }
 
+void test(void){
+    char *pname = "shao";
+    my_strcat(pname,"feng");
+    printf("first name : %s\n",pname);
+    char lastname[3];
+    my_strcpy(lastname, "zhang");
+    my_strcat(pname,lastname);
+    printf("full name:%s,length:%d\n",pname,my_strlen(pname));
+    char *stars = NULL;
+    stars = my_strrep("*",50);
+    printf("%s\n",stars);
+    stars = my_strdup("duplicate lines");
+    printf("%s\n",stars);
+
+
+}
+
 int main(){
-    char *name = "sfzhang";
-    char address[] = "404 55 Oakmount Rd.";
-
-
-
+   test();
 }
 // different ways to initialize strings
 //strcpy
