@@ -59,9 +59,6 @@ void *my_strcpy(char *p1, const char *p2){
 
 
 void *my_strcat(char *p1, const char *p2){
-    printf("enter my_strcat!");
-    fflush(stdout);
-    printf("p1:%s\tp2:%s\n",p1,p2);
     char *new = (char *)realloc(p1,strlen(p1)+strlen(p2)+1);
     if (new == _NULL) {
         perror("realloc:");
@@ -73,16 +70,15 @@ void *my_strcat(char *p1, const char *p2){
     }
     strcpy(new,p1);
     strcpy(new+strlen(p1),p2);
-    free(p1);
-    printf("leave my_strcat!");
-    fflush(stdout);
+    //free(p1);
     return new;
 
 }
 
 void test(void){
-    char *pname = "shao";
-    my_strcat(pname,"feng");
+    char *pname = (char *)malloc(5);
+    strcpy(pname, "shao");
+    pname = my_strcat(pname,"feng");
     printf("first name : %s\n",pname);
     char lastname[3];
     my_strcpy(lastname, "zhang");
