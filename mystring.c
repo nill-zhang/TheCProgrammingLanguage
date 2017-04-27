@@ -58,32 +58,59 @@ void *my_strcpy(char *p1, const char *p2){
 
 
 
-void *my_strcat(char *p1, const char *p2){
-    char *new = (char *)realloc(p1,strlen(p1)+strlen(p2)+1);
+void *my_strcat(char *p1, const char *p2) {
+    char *new = (char *) realloc(p1, strlen(p1) + strlen(p2) + 1);
     if (new == _NULL) {
         perror("realloc:");
         new = (char *) malloc(strlen(p1) + strlen(p2) + 1);
     }
-    if (new == _NULL){
+    if (new == _NULL) {
         perror("malloc:");
         exit(EXIT_FAILURE);
     }
-    strcpy(new,p1);
-    strcpy(new+strlen(p1),p2);
-    //free(p1);
+    char *temp = new;
+    // loop exits when *temp == '\0', temp will also self-increase by 1
+    while ((*temp++ = *p1++) != '\0'){
+        printf("temp:%c\n",*temp);
+    }
+    printf("outside first loop temp:%c\n",*temp);
+    //temp--;
+    while ((*temp++ = *p2++) != '\0'){
+        printf("temp:%c\n",*temp);
+    }
+    printf("outside second loop temp:%c\n",*temp);
+//    {
+//        printf("temp:%c,p2:%c\n", *temp, *p2);
+//        temp++;
+//        p2++;
+//    }
+    //strcpy(new,p1);
+    //strcpy(new+strlen(p1),p2);
+    // don't bother to free p1, because new may be allocated right after p1 instead of starting
+    // from a new block
+    // free(p1)
+
+
+    // p1 is just a copy of firstname
+    // when you change p1, firstname will not be changed
+    // new could point to the same address as firstname as long as the allocation don't
+    // start at a new location, so when you print firstname outside, it may still point
+    // to shao, not the newly concatenated shaofeng!
+    // p1 = new;
+    printf("p1: %s\n",p1);
     return new;
 
 }
 
 void test(void){
-    char *pname = (char *)malloc(5);
-    strcpy(pname, "shao");
-    pname = my_strcat(pname,"feng");
-    printf("first name : %s\n",pname);
+    char *firstname = (char *)malloc(5);
+    strcpy(firstname, "shao");
+    my_strcat(firstname,"feng");
+    printf("first name: %p,%s\n",firstname,firstname);
     char lastname[3];
     my_strcpy(lastname, "zhang");
-    my_strcat(pname,lastname);
-    printf("full name:%s,length:%d\n",pname,my_strlen(pname));
+    my_strcat(firstname,lastname);
+    printf("full name:%s,length:%d\n",firstname,my_strlen(firstname));
     char *stars = NULL;
     stars = my_strrep("*",50);
     printf("%s\n",stars);
@@ -94,7 +121,8 @@ void test(void){
 }
 
 int main(){
-   test();
+    //test();
+
 }
 // different ways to initialize strings
 //strcpy
