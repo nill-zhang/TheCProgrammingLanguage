@@ -14,17 +14,26 @@ void *my_strcpy(char *, const char *);
 void *my_strcat(char *, const char *);
 
 void *my_strrep(const char* p, unsigned num) {
-    char *new = malloc(num * strlen(p) + 1);
+
+    unsigned lenp = strlen(p);
+    char *new = malloc(num * lenp + 1);
     int i = 0;
-    while (i++ < num)
-        strcpy(&new[i * strlen(p)], p);
+
+    while (i < num) {
+        char *tempNew = &new[(i++) * lenp];
+        const char *tempP = p;
+        while ((*tempNew++ = *tempP++) != '\n');
+    }
+        //strcpy(&new[(i++) * strlen(p)], p);
     return new;
 
 }
 
 void *my_strdup(const char*p){
     char *new = (char *)malloc(strlen(p)+1);
-    strcpy(new,p);
+    //strcpy(new,p);
+    char *temp=new;
+    while((*temp++ = *p++) != '\0');
     return new;
 
 }
@@ -33,12 +42,18 @@ unsigned my_strlen(const char *p){
     unsigned i=0;
     while(p[i++]!='\0')
         ;
-    return i;
+    return i-1;
 
 
 }
 
 void *my_strcpy(char *p1, const char *p2){
+    char *temp = p1;
+    if (my_strlen(temp) >= my_strlen(p2)){
+        while((*temp++ = *p2++) != '\0');
+        return p1;
+    }
+
     p1 = realloc(p1, strlen(p2)+1);
     if (p1 == _NULL){
         p1 = malloc(strlen(p2)+1);
@@ -49,7 +64,7 @@ void *my_strcpy(char *p1, const char *p2){
         exit(EXIT_FAILURE);
     }
     // when the loop exits, *p1 == '\0'
-    while ((*p1++ = *p2++) != '\0')
+    while ((*temp++ = *p2++) != '\0')
         ;
     return p1;
 
@@ -59,6 +74,7 @@ void *my_strcpy(char *p1, const char *p2){
 
 
 void *my_strcat(char *p1, const char *p2) {
+    // new pointer will points to the same address as p1
     char *new = (char *) realloc(p1, strlen(p1) + strlen(p2) + 1);
     if (new == _NULL) {
         perror("realloc:");
@@ -68,24 +84,17 @@ void *my_strcat(char *p1, const char *p2) {
         perror("malloc:");
         exit(EXIT_FAILURE);
     }
+    // why I use a temp pointer?
+    // because I will shift pointer positions, if you use
+    // new, it will point to its tail after being shifted many steps
+    // before you return it, check
+    // the following that print out of p1
     char *temp = new;
-    // loop exits when *temp == '\0', temp will also self-increase by 1
-    while ((*temp++ = *p1++) != '\0'){
-        printf("temp:%c\n",*temp);
-    }
-    printf("outside first loop temp:%c\n",*temp);
-    //temp--;
-    while ((*temp++ = *p2++) != '\0'){
-        printf("temp:%c\n",*temp);
-    }
-    printf("outside second loop temp:%c\n",*temp);
-//    {
-//        printf("temp:%c,p2:%c\n", *temp, *p2);
-//        temp++;
-//        p2++;
-//    }
-    //strcpy(new,p1);
-    //strcpy(new+strlen(p1),p2);
+    while ((*temp++ = *p1++) != '\0');
+    temp--;
+    while ((*temp++ = *p2++) != '\0');
+    //strcpy(new, p1);
+    //strcpy(new + strlen(p1),p2);
     // don't bother to free p1, because new may be allocated right after p1 instead of starting
     // from a new block
     // free(p1)
@@ -121,7 +130,7 @@ void test(void){
 }
 
 int main(){
-    //test();
+    test();
 
 }
 // different ways to initialize strings
