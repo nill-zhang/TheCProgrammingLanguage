@@ -1,21 +1,23 @@
 //
-// Created by Admin on 4/17/2017.
+// Created by sfzhang on 4/17/2017.
 //
 #include <stdio.h>
 
+/* the last parameter can also be written as int pInt[][columns]*/
 void print_2darray(int rows, int columns, int (*pInt)[columns]){
 
     printf("----------------------------------------------------\n");
     printf("       pInt->%p,         pInt+1->%p\n",pInt,pInt+1);
     printf("   &pInt[0]->%p,     &pInt[0]+1->%p\n",&pInt[0],&pInt[0]+1);
-    printf("        ,,,,,,,,,,,,,,,,       &pInt[1]->%p\n",&pInt[1]);
+    printf(",,,,,,,,,,,,,,,,       &pInt[1]->%p\n",&pInt[1]);
     printf("    pInt[0]->%p,      pInt[0]+1->%p\n",pInt[0],pInt[0]+1);
     printf("&pInt[0][0]->%p,  &pInt[0][0]+1->%p\n",&pInt[0][0],&pInt[0][0]+1);
-    printf("        ,,,,,,,,,,,,,,,,    &pInt[0][1]->%p\n",&pInt[0][1]);
+    printf(",,,,,,,,,,,,,,,,    &pInt[0][1]->%p\n",&pInt[0][1]);
     printf("----------------------------------------------------\n");
 
     printf("   pInt-->%p,     pInt+1-->%p\n",pInt,pInt+1);
     printf("  *pInt-->%p,    *pInt+1-->%p\n",*pInt,*pInt+1);
+    printf("----------------------------------------------------\n");
     int *temp, i;
     for (temp=*pInt,i=0; temp <(*pInt+columns*rows); temp++,i++){
         if (i%4==0){
@@ -42,7 +44,6 @@ void print_2darray(int rows, int columns, int (*pInt)[columns]){
 
 }
 
-
 void print_2darray_flattened(int rows, int columns, int *pInt){
     int i;
     for (i=0;i<rows*columns;i++){
@@ -54,18 +55,18 @@ void print_2darray_flattened(int rows, int columns, int *pInt){
     }
 }
 
-
-
 void print_2darray_test(){
     int a[2][4] = {{1,2,3,4},
                    {5,6,7,8} };
+    printf("----------------------------------------------------\n");
     printf("      &a->%p,        &a+1->%p\n",&a,&a+1);
     printf("       a->%p,         a+1->%p\n",a,a+1);
     printf("   &a[0]->%p,     &a[0]+1->%p\n",&a[0],&a[0]+1);
-    printf("        ,,,,,,,,,,,,,       &a[1]->%p\n",&a[1]);
+    printf(",,,,,,,,,,,,,       &a[1]->%p\n",&a[1]);
     printf("    a[0]->%p,      a[0]+1->%p\n",a[0],a[0]+1);
     printf("&a[0][0]->%p,  &a[0][0]+1->%p\n",&a[0][0],&a[0][0]+1);
-    printf("        ,,,,,,,,,,,,,    &a[0][1]->%p\n",&a[0][1]);
+    printf(",,,,,,,,,,,,,    &a[0][1]->%p\n",&a[0][1]);
+    printf("----------------------------------------------------\n");
 
 
 
@@ -100,7 +101,7 @@ void print_2darray_test(){
      *
      * */
 
-    //print_2darray_flattened(2,4,&a[0][0]);
+    print_2darray_flattened(2,4,&a[0][0]);
     print_2darray(2, 4, a);
 }
 
